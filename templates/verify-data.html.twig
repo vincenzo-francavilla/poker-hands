@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1>PROCESS DATA</h1>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-lg-3"></div>
+        <div class="col-md-2">
+            <img class="player-card" src="{{ asset('cards/red_back.png') }}">
+            <div class="centered">Player one</div>
+            <div class="centered">Hands Win {{ results.stats.playerOne }}</div>
+
+        </div>
+        <div class="col-lg-2 vertical-align"></div>
+        <div class="col-lg-2">
+            <img class="player-card" src="{{ asset('cards/yellow_back.png') }}">
+            <div class="centered">Player Two</div>
+            <div class="centered">Hands Win {{ results.stats.playerTwo }}</div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+    {% for tournament in results.data %}
+        <div class="row text-center">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-2 {% if tournament.handsWinner and tournament.handsWinner.winner == 'playerOne' %}winner-card{% endif %}">
+                {% for card in  tournament.cards.playerOne %}
+                    <img class="player-cards" src="{{ asset('cards/'~card~'.png') }}">
+                {% endfor %}
+            </div>
+            <div class="col-lg-2">
+                {% if tournament.handsWinner %}{{ tournament.handsWinner.message }} <br>{{ tournament.handsWinner.winner }}{% endif %}
+                {#{{ dump(tournament) }}#}
+            </div>
+            <div class="col-lg-2 {% if tournament.handsWinner and tournament.handsWinner.winner == 'playerTwo' %}winner-card{% endif %}">
+                {% for card in  tournament.cards.playerTwo %}
+                    <img class="player-cards" src="{{ asset('cards/'~card~'.png') }}">
+                {% endfor %}
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    {% endfor %}
+{% endblock %}
